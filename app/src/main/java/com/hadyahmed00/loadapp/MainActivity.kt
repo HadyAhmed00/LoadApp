@@ -25,21 +25,16 @@ import com.hadyahmed00.loadapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
     private var selectedItem = ""
-
     private var downloadID: Long = 0
 
-    private lateinit var notificationManager: NotificationManager
-    private lateinit var pendingIntent: PendingIntent
-    private lateinit var action: NotificationCompat.Action
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        var customBottn = CustomView(this)
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         createChannel(
@@ -47,63 +42,63 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.notification_channel)
         )
 
-        binding.downloadButton.setOnClickListener {
+        /*
+        * if(selectedURL != null) {
+                custom_button.buttonState = ButtonState.Loading
+                download()
+
+            } else {
+                val toast = Toast.makeText(
+                    applicationContext,
+                    getString(R.string.please_select_file),
+                    Toast.LENGTH_LONG)
+                toast.show()
+            }*/
+        binding.customButton.setOnClickListener {
+
             when (binding.radioGroup.checkedRadioButtonId) {
                 R.id.glide -> {
+                    binding.customButton.buttonState = ButtonState.Loading
                     download(glideUrl)
-                    Toast.makeText(this, "glide is selected", Toast.LENGTH_SHORT).show()
-                    selectedItem = "glide"
+                    selectedItem = "Glide"
                 }
                 R.id.load_app -> {
+                    binding.customButton.buttonState = ButtonState.Loading
                     download(loadAppUrl)
-                    selectedItem = "load_app"
-                    Toast.makeText(this, "Load app is selected", Toast.LENGTH_SHORT).show()
+                    selectedItem = "Load App"
                 }
                 R.id.retrofit -> {
+                    binding.customButton.buttonState = ButtonState.Loading
                     download(retrofitUrl)
-                    selectedItem = "retrofit"
-                    Toast.makeText(this, "Retrofit is selected", Toast.LENGTH_SHORT).show()
+                    selectedItem = "Retrofit"
                 }
                 else -> {
                     Toast.makeText(this, "Nothing is Selected", Toast.LENGTH_SHORT).show()
-
-
-                    /*val notificationManager =
-                        ContextCompat.getSystemService(this, NotificationManager::class.java)
-                     as NotificationManager
-
-                    notificationManager.sendNotification(
-                        this.getText(R.string.notification_description).toString(),
-                        this
-                    )*/
                 }
 
             }
+        }
+
+        binding.downloadButton.setOnClickListener {
+
         }
 
     }
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-
             val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-
             val query = DownloadManager.Query()
             query.setFilterById(id!!)
             val cursor = downloadManager.query(query)
-            var downloadStat = ""
+            binding.customButton.buttonState = ButtonState.Completed
+            var downloadStat = "0"
             if (cursor != null && cursor.moveToNext()) {
                 val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
                 cursor.close()
-                when (status) {
-                    DownloadManager.STATUS_FAILED -> {
-                        downloadStat = "FAILED"
-                    }
-                    DownloadManager.STATUS_SUCCESSFUL -> {
-                        downloadStat = "SUCCESSFUL"
-                    }
-                }
+                if (status == DownloadManager.STATUS_SUCCESSFUL) downloadStat = "1"
             }
             val notificationManager = context?.let {
                 ContextCompat.getSystemService(
@@ -113,7 +108,16 @@ class MainActivity : AppCompatActivity() {
             } as NotificationManager
 
             notificationManager.sendNotification(
-                context.getText(R.string.notification_description).toString(),
+                context.getText(
+                    when (selectedItem) {
+                        "Retrofit" -> R.string.notification_description_Retrofit
+                        "Load App" -> R.string.notification_description_Project
+                        "Glide" -> R.string.notification_description_Glide
+                        else -> {
+                            R.string.notification_description_Project
+                        }
+                    }
+                ).toString(),
                 context,
                 selectedItem,
                 downloadStat
@@ -143,7 +147,6 @@ class MainActivity : AppCompatActivity() {
             "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
         private const val retrofitUrl =
             "https://github.com/square/retrofit/archive/refs/heads/master.zip"
-        private const val CHANNEL_ID = "channelId"
     }
 
     private fun createChannel(channelId: String, channelName: String) {
@@ -158,7 +161,7 @@ class MainActivity : AppCompatActivity() {
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
-            notificationChannel.description = getString(R.string.notification_description)
+//            notificationChannel.description = getString(R.string.notification_description)
             val notificationManager = application.getSystemService(
                 NotificationManager::class.java
             )

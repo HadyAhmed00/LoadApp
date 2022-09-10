@@ -20,9 +20,7 @@ fun NotificationManager.sendNotification(
     downloadStatus: String
 ) {
 
-
     val contentIntent = Intent(applicationContext, DetailActivity::class.java)
-
     contentIntent.putExtra("status",downloadStatus)
     contentIntent.putExtra("item",selectedItem)
     val contentPendingIntent = PendingIntent.getActivity(
@@ -31,10 +29,6 @@ fun NotificationManager.sendNotification(
         contentIntent,
         PendingIntent.FLAG_UPDATE_CURRENT
     )
-
-    Log.i("PutExtraTest","the status is ${downloadStatus}")
-    Log.i("PutExtraTest","the item is ${selectedItem}")
-
 
     val builder = NotificationCompat.Builder(
         applicationContext,
@@ -45,16 +39,15 @@ fun NotificationManager.sendNotification(
         .setContentText(messageBody)
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
+        .addAction(
+            R.drawable.ic_launcher_foreground,
+            applicationContext.getString(R.string.notification_button),
+            contentPendingIntent)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
 
     notify(NOTIFICATION_ID, builder.build())
 }
 
-// TODO: Step 1.14 Cancel all notifications
-/**
- * Cancels all notifications.
- *
- */
 fun NotificationManager.cancelNotifications() {
     cancelAll()
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -71,25 +70,39 @@
                     android:buttonTint="@color/colorPrimary"
                     android:text="@string/retrofit"
                     android:textColor="@color/white" />
+
             </RadioGroup>
 
             <Button
                 android:id="@+id/download_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="50dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="20dp"
                 android:text="@string/downlaod"
                 android:textAllCaps="false"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.hadyahmed00.loadapp.CustomView
+                android:id="@+id/custom_button"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
+                app:backgroundColor="@color/colorPrimary"
+                app:buttonCircleColor="@color/white"
+                app:buttonLoadingColor="@color/colorPrimaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radio_group" />
-
+                app:layout_constraintTop_toBottomOf="@+id/radio_group"
+                app:textColor="@color/white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </ScrollView>
 </layout>

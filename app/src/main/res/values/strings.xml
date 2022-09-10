@@ -11,16 +11,18 @@
 
 
     <string name="notification_title">Udacity: Android Kotlin Nanodegree </string>
-    <string name="notification_description">The Project 3 repository is downloaded</string>
+    <string name="notification_description_Glide">The Glide Project repository Download status</string>
+    <string name="notification_description_Project">The Project 3 repository is Download status</string>
+    <string name="notification_description_Retrofit">The Retrofit Project repository is Download status</string>
     <string name="notification_button">See changes</string>
     <string name="notification_channel">downloadChannel</string>
     <string name="notification_channel_id">channelId</string>
 
 
-    <string name="button_name">Click me</string>
+    <string name="button_name">Download</string>
     <string name="button_loading">We are loading </string>
     <string name="title_activity_detail">DetailActivity</string>
-    <string name="selected_item">File Name</string>
-    <string name="status">Status</string>
+    <string name="selected_item">File Name :</string>
+    <string name="status">Status :</string>
     <string name="ok">OK</string>
 </resources>
