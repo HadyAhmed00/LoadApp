@@ -10,7 +10,7 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="notification_title">Udacity: Android Kotlin Nanodegree </string>
+    <string name="notification_title">Downloading Status LoadApp</string>
     <string name="notification_description_Glide">The Glide Project repository Download status</string>
     <string name="notification_description_Project">The Project 3 repository is Download status</string>
     <string name="notification_description_Retrofit">The Retrofit Project repository is Download status</string>

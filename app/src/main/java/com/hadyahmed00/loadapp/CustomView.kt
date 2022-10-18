@@ -56,7 +56,7 @@ class CustomView @JvmOverloads constructor(
             buttonLoadingColor = getColor(R.styleable.LoadingButton_buttonLoadingColor, 0)
             buttonCircleColor = getColor(R.styleable.LoadingButton_buttonCircleColor, 0)
         }
-        buttonState = ButtonState.Loading
+
 
         animator.apply {
             duration = 3000L
