@@ -7,6 +7,7 @@ This course is all about notification and custom animation. The lessons include 
 
 * Custom View (create custom `view` / button by inheriting View)
 * Custom Attributes (create custom attributes using `withStyledAttributes()`)
+
 * ValueAnimator (use ValueAnimator and Paint to perform `animations`)
 * `Canvas` (use paint to draw the `Canvas UI`)
 * `MotionLayout` (use MotionLayout and MotionScene to perform animation)
